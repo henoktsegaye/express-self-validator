@@ -27,8 +27,12 @@ app.get('/', expressSelfValidator({
         // key is the name of the query parameter
         key: "offest",
         // custom validation function
+        // not that each validation function should return a boolean
+        // and the validation function should be sync
         validators: [
             [isNumber, "offset must be a number"],
+            // we can be sure value to be number here because of the previous validation
+            [(value) => value > 0, "offset must be greater than 0"]
             [(value) => offset < 0 , "offset must be greater than 0"],
             [(value) => offset > 100 , "offset must be less than 100"]
         ],
@@ -50,7 +54,7 @@ for example to validate request body you can do this:
         key: "name",
         validators: [
             [isString, "name must be a string"],
-            [isLength, "name must be between 3 and 10", {min: 3, max: 10}],
+            [(value) => value.length > 3 && value.length < 10>, "name must be between 3 and 10"],
         ],
         required: true,
     }
