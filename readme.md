@@ -20,6 +20,11 @@ npm install express-self-validator
 const express = require('express');
 const expressSelfValidator = require('express-self-validator');
 
+// you can pass a validation function to the middleware
+const isNumber = (value) => {
+  return !isNaN(value);
+};
+
 const app = express();
 app.get('/', expressSelfValidator({
     // validation on the request query params
@@ -32,9 +37,8 @@ app.get('/', expressSelfValidator({
         validators: [
             [isNumber, "offset must be a number"],
             // we can be sure value to be number here because of the previous validation
-            [(value) => value > 0, "offset must be greater than 0"]
-            [(value) => offset < 0 , "offset must be greater than 0"],
-            [(value) => offset > 100 , "offset must be less than 100"]
+            [(value) => value < 0, "offset must be greater than 0"]
+            [(value) => value > 100 , "offset must be less than 100"]
         ],
         // optional, default is false
         required: true,
@@ -83,6 +87,13 @@ the middleware will throw an error with the following structure:
     isOperational: true
 }
 ```
+i.e if you pass a validator function that has an error the middleware will throw a BaseError with status 500 and message 
+```javascript
+{
+    status: 500,
+    message: "undefined is not a function",
+}
+```
 
 ```javascript
 app.use((err, req, res, next) => {
@@ -91,7 +102,12 @@ app.use((err, req, res, next) => {
             message: err.message,
             errors: err.errors
         })
-    } else {
+    } else if (err instanceof expressSelfValidator.BaseError) {
+        // 500 error
+        res.status(err.status).json({
+            message: err.message
+        })
+    } else
         next(err);
     }
 });
