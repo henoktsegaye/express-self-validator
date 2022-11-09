@@ -8,7 +8,19 @@
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "homepage": "https://github.com/henoktsegaye/express-self-validator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henoktsegaye/express-self-validator.git"
+  },
+  "author": "Henok Tsegaye",
+  "bugs": {
+    "url": "https://github.com/henoktsegaye/express-self-validator/issues",
+    "email": "maxhenock@gmail.com"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2"
