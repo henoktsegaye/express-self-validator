@@ -158,8 +158,12 @@ function validateMiddleware(validateParams: ValidationParam) {
       }
 
       next();
-    } catch (error) {
-      next(new BaseError(error.message));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        next(new BaseError(error.message));
+      } else {
+        next(new BaseError("Something went wrong."));
+      }
     }
   };
 }
