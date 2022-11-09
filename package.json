@@ -1,6 +1,6 @@
 {
   "name": "express-self-validator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "express self validator",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "email": "maxhenock@gmail.com"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
   "license": "MIT",
